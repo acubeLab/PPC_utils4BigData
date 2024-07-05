@@ -1,0 +1,6 @@
+#! /bin/sh
+case $1 in
+        -d) pzstd -d -19 -p16;;
+        '') pzstd -19 -p16;;
+        *)  echo "Unknown option $1">&2; exit 1;;
+esac

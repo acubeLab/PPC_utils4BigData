@@ -1,0 +1,6 @@
+#! /bin/sh
+case $1 in
+        -d) xz -d -T16;;
+        '') xz -e9 -T16;;
+        *)  echo "Unknown option $1">&2; exit 1;;
+esac

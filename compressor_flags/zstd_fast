@@ -1,0 +1,6 @@
+#! /bin/sh
+case $1 in
+        -d) zstd -d --fast --adapt;;
+        '') zstd --fast --adapt;;
+        *)  echo "Unknown option $1">&2; exit 1;;
+esac

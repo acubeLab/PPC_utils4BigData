@@ -1,0 +1,6 @@
+#! /bin/sh
+case $1 in
+        -d) /afs/enea.it/por/user/boffa/miniconda3/bin/zstd -d -12 --long=30 --adapt;;
+        '') /afs/enea.it/por/user/boffa/miniconda3/bin/zstd -12 --long=30 -T16 --adapt;;
+        *)  echo "Unknown option $1">&2; exit 1;;
+esac
