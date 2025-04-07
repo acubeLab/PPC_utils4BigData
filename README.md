@@ -17,7 +17,7 @@ We point out that the **current library** is designed to manage collections of *
 Prerequisites: `python3.11 python3.11-dev python3.11-venv libfuzzy-dev zstd`. 
 If you are on MAC install: `libmagic` and `gnu-tar`
 
-- Clone this repo `git clone https://github.com/aboffa/PPC_utils4BigData.git`
+- Clone this repo `git clone https://github.com/acubeLab/PPC_utils4BigData.git`
 - Go into the repo directory `cd PPC_utils4BigData`
 - Create virtual environment `python3.11 -m venv ppc_venv`
 - Enter the virtual environment `source ppc_venv/bin/activate`
@@ -29,7 +29,7 @@ Some libraries (i.e. `ssdeep`, `guesslang`) used by the `ssdeepsort` and `typemi
 
 Prerequisites: `python3.8 python3.8-dev python3.8-venv libfuzzy-dev zstd`. 
 
-- Clone this repo `git clone https://github.com/aboffa/PPC_utils4BigData.git`
+- Clone this repo `git clone https://github.com/acubeLab/PPC_utils4BigData.git`
 - Go into the repo directory `cd PPC_utils4BigData`
 - Create virtual environment `python3.8 -m venv ppc_venv`
 - Enter the virtual environment `source ppc_venv/bin/activate`
@@ -87,11 +87,11 @@ Or, for example:
 ```
 decompresses the entire 25GiB Python dataset into the `./tmp/blobs` directory.
 
-Once you decompressed an archive you are ready to [quick start](#quick-start).
+Once you have decompressed an archive, you are ready to [quick start](#quick-start).
 
 ## Decompress from list 
 
-If you have just the list of SWH blobs, you can dowload all of them from the [official Software Heritage Bucket](https://registry.opendata.aws/software-heritage/) using the script `download_from_list.py`.
+If you have just the list of SWH blobs, you can download all of them from the [official Software Heritage Bucket](https://registry.opendata.aws/software-heritage/) using the script `download_from_list.py`.
 You just need to intall boto3 and smar_open (`pip install boto3 smart_open`).s
 
 ## 🧪 Quick start: 
@@ -339,7 +339,7 @@ and pass it to the corresponding option of `bench_PPC.py` script as `-cFULL_PATH
 
 Locality-sensitive hashing techniques (like Simhash, Minhash, etc...) view each file as a sequence of tokens. Tokens can be a sequence of bytes, words, lines, or arbitrary parts of a file. 
 
-In this project we are working with source code files. Developers, while improving the code base of their software, essentially add or delete lines to/from textual files. This is why we consider a file as a sequence of lines (i.e., divided by the `\n` char), and we feed the LSH with lines to get similar fingerprints from files that are different versions of the same source code artifact. 
+In this project, we are working with source code files. Developers, while improving the code base of their software, essentially add or delete lines to/from textual files. This is why we consider a file as a sequence of lines (i.e., divided by the `\n` char), and we feed the LSH with lines to get similar fingerprints from files that are different versions of the same source code artifact. 
 
 
 Tokens could be made of groups of consecutive lines (got from a sliding window of a certain width), but we experimentally evaluated that it is better to have tokens made of single lines. We want to be robust with respect to tiny and irrelevant changes to the files, so we remove leading and trailing tabs and white spaces from the tokens (lines) and we do not consider tokens too short (<10 chars).
@@ -457,12 +457,12 @@ Each subset of the Software Heritage Archive includes two files:
 
 - A compressed tar archive containing the actual content of the files of the subset, each one named with the SHA1 of their content.
 
-In case you want to decompress archive you generate with `bench_PPC.py --keep` use 
+In case you want to decompress the archive you generate with `bench_PPC.py --keep` use 
 ```bash
 ./decompress_dataset.py -c <used_compressor> <first_archive> <destination_dir>
 ```
 
-To decompress archive you generate with `bench_PPC.py --keep --block-size xxMiB`, so divided into blocks (file-access scenario), use, for example:
+To decompress the archive you generate with `bench_PPC.py --keep --block-size xxMiB`, so divided into blocks (file-access scenario), use, for example:
 ```bash
 ./decompress_dataset.py -c zstd /extralocal/swh/000000000_C_small_block_compressed_xxMiB.tar.zstd -o <destination_dir>
 ```
@@ -473,7 +473,7 @@ If you want to work on a larger dataset look at the section [Datasets](#datasets
 
 ### 50GiB dataset from GitHub
 
-There is also a 50GiB of blobs taken from the most popular repositories on GitHub (october 2022). It is made of the most popular (the one with more stars) GitHub repositories written in C/C++ and Python. The average file size is 28,89 KiB, and it contains all the versions of the source code of famous repositories like [redis](https://github.com/redis/redis), [ngnix](https://github.com/nginx/nginx), [zstd](https://github.com/facebook/zstd), [scikit-learn](https://github.com/scikit-learn/scikit-learn), [bert](https://github.com/google-research/bert), and [keras](https://github.com/keras-team/keras). The complete list of repositories included is in `dataset_generation` folder.
+There is also a 50GiB of blobs taken from the most popular repositories on GitHub (October 2022). It is made of the most popular (the one with more stars) GitHub repositories written in C/C++ and Python. The average file size is 28,89 KiB, and it contains all the versions of the source code of famous repositories like [redis](https://github.com/redis/redis), [ngnix](https://github.com/nginx/nginx), [zstd](https://github.com/facebook/zstd), [scikit-learn](https://github.com/scikit-learn/scikit-learn), [bert](https://github.com/google-research/bert), and [keras](https://github.com/keras-team/keras). The complete list of repositories included is in `dataset_generation` folder.
 
 
 To download the repositories use:
@@ -487,13 +487,13 @@ To decompress them use:
 ./decompress_dataset.py <full-path>/repos_all_compressed.tar.zstd_22 --dataset -o tmp/repos --force
 ```
 
-To benchmark the performance of the PPC-framework on this dataset run:
+To benchmark the performance of the PPC framework on this dataset run:
 
 ```bash
 ./bench_PPC.py tmp/50GiB_github.csv -i <full-path>/tmp/blobs -o /tmp -p all
 ```
 
-To benchmark the perfromance of git-pack use:
+To benchmark the performance of git-pack use:
 
 ```bash
 ./bench_git_pack.py <full-path>/tmp/repos/repos_all -o /tmp
